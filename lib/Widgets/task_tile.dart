@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 
 import 'package:todo_app/Data/data.dart';
 import 'package:todo_app/Utils/utils.dart';
+import 'package:todo_app/Widgets/circule_container.dart';
 
 class TaskTile extends StatelessWidget {
   const TaskTile({super.key, required this.task});
@@ -24,16 +25,8 @@ class TaskTile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(9.0),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: task.category.color.withOpacity(backgroundOpacity),
-                border: Border.all(
-                  width: 2,
-                  color: task.category.color.withOpacity(iconOpacity),
-                ),
-            ),
+          CircleContainer(
+            color: task.category.color.withOpacity(backgroundOpacity),
             child: Center(
               child: Icon(
                 task.category.icon,
@@ -57,6 +50,6 @@ class TaskTile extends StatelessWidget {
           ),
         ],
       ),
-    );;
+    );
   }
 }

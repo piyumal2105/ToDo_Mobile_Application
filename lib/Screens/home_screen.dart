@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo_app/Config/routes/route.dart';
 import 'package:todo_app/Data/data.dart';
 import 'package:todo_app/Utils/utils.dart';
 import 'package:todo_app/Widgets/common_containor.dart';
@@ -8,6 +10,9 @@ import 'package:todo_app/Widgets/display_list_of_task.dart';
 import 'package:todo_app/Widgets/display_white_text.dart';
 
 class HomeScreen extends StatelessWidget {
+  static HomeScreen builder(BuildContext context, GoRouterState state) => const HomeScreen();
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colorScheme;
@@ -54,10 +59,10 @@ class HomeScreen extends StatelessWidget {
                       tasks: [
                         Task(
                             title: "title 01",
-                            note: "note",
+                            note: "",
                             time: "10.12",
                             date: "Aug, 7",
-                            category: TaskCategories.education,
+                            category: TaskCategories.shopping,
                             isCompleted: false,
                         ),
                         Task(
@@ -83,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                           note: "note",
                           time: "10.12",
                           date: "Aug, 7",
-                          category: TaskCategories.education,
+                          category: TaskCategories.personal,
                           isCompleted: true,
                         ),
                         Task(
@@ -91,7 +96,7 @@ class HomeScreen extends StatelessWidget {
                           note: "note",
                           time: "13.12",
                           date: "Aug, 7",
-                          category: TaskCategories.education,
+                          category: TaskCategories.work,
                           isCompleted: true,
                         ),
                       ],
@@ -99,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const Gap(20),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => context.push(RouteLocation.createtask),
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: DisplayWhiteText(text: "Add New Task"),

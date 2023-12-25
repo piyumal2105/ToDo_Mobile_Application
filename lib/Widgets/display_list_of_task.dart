@@ -35,7 +35,23 @@ class DisplayListOfTask extends StatelessWidget {
           padding: EdgeInsets.zero,
           itemBuilder: (ctx, index) {
             final task = tasks[index];
-            return TaskTile(task: task);
+            return InkWell(
+              onLongPress: () {
+                //Todo delete task
+              },
+              onTap: () async {
+                //Todo show task details
+                await showModalBottomSheet(
+                    context: context,
+                  builder: (ctx) {
+                      return TaskDetails(
+                        task: task
+                      );
+                  }
+                );
+              },
+              child: TaskTile(task: task),
+            );
           },
         separatorBuilder: (BuildContext context, int index) {
             return const Divider(

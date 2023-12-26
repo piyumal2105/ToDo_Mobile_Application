@@ -16,30 +16,34 @@ class CreateTaskScreen extends StatelessWidget {
           text: "Add New Task",
         ),
       ),
-      body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            CommonTextField(
-                title: "Task Title",
-                hintText: "Task Title"
-            ),
-            const Gap(16),
-            const SelectDateTime(),
-            const Gap(16),
-            const CommonTextField(
-              title: "Note",
-              hintText: "Task Note",
-              maxLines: 6,
-            ),
-            const Gap(60),
-            ElevatedButton(
-              onPressed: () {},
-              child: const DisplayWhiteText(text: "Save"),
-            )
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              CommonTextField(
+                  title: "Task Title",
+                  hintText: "Task Title"
+              ),
+              const Gap(16),
+              const SelectCategory(),
+              const Gap(16),
+              const SelectDateTime(),
+              const Gap(16),
+              const CommonTextField(
+                title: "Note",
+                hintText: "Task Note",
+                maxLines: 6,
+              ),
+              const Gap(60),
+              ElevatedButton(
+                onPressed: () {},
+                child: const DisplayWhiteText(text: "Save"),
+              ),
+            ],
+          ),
         ),
       ),
     );

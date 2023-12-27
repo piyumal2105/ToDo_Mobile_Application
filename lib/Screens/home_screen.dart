@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/Config/routes/route.dart';
 import 'package:todo_app/Data/data.dart';
 import 'package:todo_app/Providers/providers.dart';
@@ -20,6 +21,9 @@ class HomeScreen extends ConsumerWidget {
     final colors = context.colorScheme;
     final deviceSize = context.deviceSize;
     final taskState = ref.watch(taskProvoder);
+    final completedTasks = _completedTasks(taskState.tasks, ref);
+    final incompletedTasks = _incompletedTasks(taskState.tasks, ref);
+    final selectedDate = ref.watch(dateProvider);
 
     return Scaffold(
       body: Stack(
@@ -30,15 +34,18 @@ class HomeScreen extends ConsumerWidget {
                 height: deviceSize.height * 0.3,
                 width: deviceSize.width,
                 color: colors.primary,
-                child: const Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    DisplayWhiteText(
-                      text: "Aug 7, 2023",
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal,
+                    InkWell(
+                      onTap: () => Helpers.selectDate(context, ref),
+                      child: DisplayWhiteText(
+                        text: DateFormat.yMMMd().format(selectedDate),
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
-                    DisplayWhiteText(
+                    const DisplayWhiteText(
                       text: "My Todo List",
                       fontSize: 40,
                       fontWeight: FontWeight.normal,
@@ -60,7 +67,7 @@ class HomeScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     DisplayListOfTask(
-                      tasks: taskState.tasks,
+                      tasks: incompletedTasks,
                     ),
                     const Gap(20),
                     Text(
@@ -69,7 +76,7 @@ class HomeScreen extends ConsumerWidget {
                     ),
                     const Gap(20),
                     DisplayListOfTask(
-                      tasks: taskState.tasks,
+                      tasks: completedTasks,
                       isCompletedTasks: true,
                     ),
                     const Gap(20),
@@ -89,4 +96,30 @@ class HomeScreen extends ConsumerWidget {
       ),
     );
   }
+
+  List<Task> _completedTasks(List<Task> tasks, WidgetRef ref) {
+    final selectedDate = ref.watch(dateProvider);
+    final List<Task> filteredTask = [];
+    for (var task in tasks) {
+      final isTaskDay = Helpers.isTaskFromSelectedDate(task, selectedDate);
+      if(task.isCompleted && isTaskDay) {
+        filteredTask.add(task);
+      }
+    }
+    return filteredTask;
+  }
+
+  List<Task> _incompletedTasks(List<Task> tasks, WidgetRef ref) {
+    final selectedDate = ref.watch(dateProvider);
+    final List<Task> filteredTask = [];
+    for (var task in tasks) {
+      //Not Completed Tasks
+      final isTaskDay = Helpers.isTaskFromSelectedDate(task, selectedDate);
+      if(!task.isCompleted && isTaskDay) {
+        filteredTask.add(task);
+      }
+    }
+    return filteredTask;
+  }
+
 }

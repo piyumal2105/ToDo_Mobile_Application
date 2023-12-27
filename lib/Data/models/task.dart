@@ -5,28 +5,28 @@ class Task extends Equatable {
   final int? id;
   final String title;
   final String note;
+  final TaskCategories category;
   final String time;
   final String date;
-  final TaskCategories category;
   final bool isCompleted;
 
   const Task({
     this.id,
     required this.title,
-    required this.note,
+    required this.category,
     required this.time,
     required this.date,
-    required this.category,
+    required this.note,
     required this.isCompleted,
   });
 
   @override
-
   List<Object?> get props {
     return [
       id!,
       title,
       note,
+      category,
       time,
       date,
       isCompleted,
@@ -50,9 +50,9 @@ class Task extends Equatable {
       id: map[TaskKeys.id],
       title: map[TaskKeys.title],
       note: map[TaskKeys.note],
+      category: TaskCategories.stringToTaskCategory(map[TaskKeys.category]),
       time: map[TaskKeys.time],
       date: map[TaskKeys.date],
-      category: TaskCategories.stringToTaskCategory(map[TaskKeys.category]),
       isCompleted: map[TaskKeys.isCompleted] == 1 ? true : false,
     );
   }

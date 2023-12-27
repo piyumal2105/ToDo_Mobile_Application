@@ -25,8 +25,9 @@ class TaskDatasource {
     final path = join(dbPath, DBKeys.dbName);
     return openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
   }
 
@@ -39,9 +40,16 @@ class TaskDatasource {
       ${TaskKeys.date} TEXT,
       ${TaskKeys.time} TEXT,
       ${TaskKeys.category} TEXT,
-      ${TaskKeys.isCompleted} INTEGER    
+      ${TaskKeys.isCompleted} INTEGER,    
     )
     ''');
+  }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      // Perform migration steps, e.g., adding the 'note' column
+      await db.execute('ALTER TABLE ${DBKeys.dbTable} ADD COLUMN ${TaskKeys.note} TEXT');
+    }
   }
 
   Future<int> addTask(Task task) async {

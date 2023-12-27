@@ -6,8 +6,9 @@ import 'package:todo_app/Utils/utils.dart';
 import 'package:todo_app/Widgets/circule_container.dart';
 
 class TaskTile extends StatelessWidget {
-  const TaskTile({super.key, required this.task});
+  const TaskTile({Key? key, required this.task, required this.onCompleted}) : super(key: key);
   final Task task;
+  final Function(bool) onCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,10 @@ class TaskTile extends StatelessWidget {
           ),
           Checkbox(
             value: task.isCompleted,
-            onChanged: (value) {},
+            onChanged: (value) {
+              // Call the provided onCompleted callback
+              onCompleted(value ?? false);
+            },
           ),
         ],
       ),

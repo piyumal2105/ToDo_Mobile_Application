@@ -41,7 +41,7 @@ class HomeScreen extends ConsumerWidget {
                       onTap: () => Helpers.selectDate(context, ref),
                       child: DisplayWhiteText(
                         text: DateFormat.yMMMd().format(selectedDate),
-                        fontSize: 20,
+                        fontSize: 25,
                         fontWeight: FontWeight.normal,
                       ),
                     ),
